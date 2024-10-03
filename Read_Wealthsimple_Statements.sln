@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34728.123
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Read_Wealthsimple_Statements", "Read_Wealthsimple_Statements\Read_Wealthsimple_Statements.csproj", "{70B4E734-6CFE-4054-B791-2BC917E86E5E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{70B4E734-6CFE-4054-B791-2BC917E86E5E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{70B4E734-6CFE-4054-B791-2BC917E86E5E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{70B4E734-6CFE-4054-B791-2BC917E86E5E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{70B4E734-6CFE-4054-B791-2BC917E86E5E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {2C93D649-039C-4DC5-B22E-AF7664320F8F}
+	EndGlobalSection
+EndGlobal
