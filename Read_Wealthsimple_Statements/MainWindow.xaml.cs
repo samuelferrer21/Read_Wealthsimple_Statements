@@ -27,11 +27,13 @@ namespace Read_Wealthsimple_Statements
         {
             DataContext = this;
             statements = new ObservableCollection<Statement>();
-            test = new ObservableCollection<ExcelStatement>();
+            listStatements = new ObservableCollection<ExcelStatement>();
             InitializeComponent();
         }
 
-        //Public class for our csv
+        /// <summary>
+        /// Represents the entries of an individual statement
+        /// </summary>
         public class Statement
         {
             public DateTime date { get; set; }
@@ -40,63 +42,9 @@ namespace Read_Wealthsimple_Statements
             public float amount { get; set; }
             public float balance { get; set; }
         }
-
-
-
-        //
-        private ObservableCollection<Statement> statements;
-
-        //For the list of shares in the listview
-        public ObservableCollection<Statement> Entries
-        {
-            get { return statements; }
-            set { statements = value; }
-        }
-
-        private void btnOpenFile_Click(object sender, RoutedEventArgs e)
-        {
-            OpenFileDialog fileDialog = new OpenFileDialog();
-            fileDialog.DefaultDirectory = "Downloads";
-            fileDialog.Multiselect = false;
-            fileDialog.Title = "Choose a Wealthsimple CSV";
-            fileDialog.Filter = "CSV | *.csv";
-
-            bool? success = fileDialog.ShowDialog();
-            if (success == true)
-            {
-                //Create instance of Statement
-                
-
-                string path = fileDialog.FileName;
-
-                var reader = new StreamReader(path);
-                var csv = new CsvReader(reader, CultureInfo.InvariantCulture);
-
-                var records = csv.GetRecords<Statement>();
-
-                foreach(Statement record in records )
-                {
-                    Entries.Add(record);
-                }
-
-                decimal endingBalance = (decimal) Entries.Last().balance;
-                decimal dividendsEarned = (decimal) Entries.Where(x => x.transaction.Equals("DIV")).Sum(x => x.amount);
-                decimal totalSpent = (decimal) Entries.Where(x => x.transaction.Equals("BUY")).Sum(x => x.amount);
-
-                string outputEndingBalance = $"${endingBalance}";
-                string outputDividendsEarned = $"${dividendsEarned}";
-                string outputTotalSpent = $"${Math.Abs(totalSpent)}";
-
-                lblDividendsEarnedValue.Content = outputDividendsEarned;
-                lblEndingBalanceValue.Content = outputEndingBalance;
-                lblTotalSpentValue.Content = outputTotalSpent;
-            }
-            else
-            {
-                //Nothing picked
-            }
-        }
-
+        /// <summary>
+        /// Represents the individual excel file that is detected
+        /// </summary>
         public class ExcelStatement
         {
             private string title { get; set; }
@@ -106,7 +54,6 @@ namespace Read_Wealthsimple_Statements
             public string DisplayText => this.toString();
             public string DisplayFilePath => this.getFilePath();
 
-
             public ExcelStatement(string title, string filePath)
             {
                 this.title = title;
@@ -114,11 +61,9 @@ namespace Read_Wealthsimple_Statements
             }
 
             public string getFilePath()
-            { 
+            {
                 return filePath;
             }
-
-        
 
             public string toString()
             {
@@ -126,19 +71,35 @@ namespace Read_Wealthsimple_Statements
             }
         }
 
-        private ObservableCollection<ExcelStatement> test;
 
-        //Collection of excelStatements
-        public ObservableCollection<ExcelStatement> AvailableStatements
+
+        //Handles the live updates of the UI
+        private ObservableCollection<Statement> statements;
+        private ObservableCollection<ExcelStatement> listStatements;
+
+        //Collection of transactions in the statement
+        public ObservableCollection<Statement> Entries
         {
-            get { return test; }
-            set { test = value; }
+            get { return statements; }
+            set { statements = value; }
         }
 
+        //Collection of excel Statements
+        public ObservableCollection<ExcelStatement> AvailableStatements
+        {
+            get { return listStatements; }
+            set { listStatements = value; }
+        }
+        /// <summary>
+        /// Handles the change of source directory to list all available excel files.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnChangeDirectory_Click(object sender, RoutedEventArgs e)
         {
             //Get the desired filepath
             OpenFolderDialog folderDialog = new OpenFolderDialog();
+            //Dialog settings box
             folderDialog.DefaultDirectory = "Downloads";
             folderDialog.Multiselect = false;
             folderDialog.Title = "Choose a Wealthsimple CSV";
@@ -146,9 +107,7 @@ namespace Read_Wealthsimple_Statements
             bool? success = folderDialog.ShowDialog();
             if (success == true)
             {
-                //Create instance of Statement
-
-
+                //Gets the path of the excel file
                 string path = folderDialog.FolderName;
 
                 //Get list all excel files
@@ -163,33 +122,6 @@ namespace Read_Wealthsimple_Statements
                     AvailableStatements.Add(new ExcelStatement(title, file));
 
                 }
-                
-                
-
-               
-
-
-                //var reader = new StreamReader(path);
-                //var csv = new CsvReader(reader, CultureInfo.InvariantCulture);
-
-                //var records = csv.GetRecords<Statement>();
-
-                //foreach (Statement record in records)
-                //{
-                //    Entries.Add(record);
-                //}
-
-                //decimal endingBalance = (decimal)Entries.Last().balance;
-                //decimal dividendsEarned = (decimal)Entries.Where(x => x.transaction.Equals("DIV")).Sum(x => x.amount);
-                //decimal totalSpent = (decimal)Entries.Where(x => x.transaction.Equals("BUY")).Sum(x => x.amount);
-
-                //string outputEndingBalance = $"${endingBalance}";
-                //string outputDividendsEarned = $"${dividendsEarned}";
-                //string outputTotalSpent = $"${Math.Abs(totalSpent)}";
-
-                //lblDividendsEarnedValue.Content = outputDividendsEarned;
-                //lblEndingBalanceValue.Content = outputEndingBalance;
-                //lblTotalSpentValue.Content = outputTotalSpent;
             }
             else
             {
@@ -198,8 +130,48 @@ namespace Read_Wealthsimple_Statements
 
         }
 
+        /// <summary>
+        /// Changes the to the selected document to update the summary information.
+        /// </summary>
+        /// <param name="sender">Reference of the object that was used</param>
+        /// <param name="e">Routed Eveents class</param>
+        private void btnChangeDocument_Click(object sender, RoutedEventArgs e)
+        {
+            /*
+             * Errors to take care of:
+             * If given file does not exist
+             *  Show dialog box
+             * If it doesnt match the wealthsimple format
+             *  Show an error in the main screen to say this excel file may not be in Wealthsimple format
+             */
 
+            string givenFilePath = (string) ((Button)sender).Tag;
 
-        
+            //Reads the given file
+            var reader = new StreamReader(givenFilePath);
+            //Reads CSV file
+            var csv = new CsvReader(reader, CultureInfo.InvariantCulture);
+
+            var records = csv.GetRecords<Statement>();
+            Entries.Clear();
+
+            foreach (Statement record in records)
+            {
+                Entries.Add(record);
+            }
+
+            decimal endingBalance = (decimal)Entries.Last().balance;
+            decimal dividendsEarned = (decimal)Entries.Where(x => x.transaction.Equals("DIV")).Sum(x => x.amount);
+            decimal totalSpent = (decimal)Entries.Where(x => x.transaction.Equals("BUY")).Sum(x => x.amount);
+
+            string outputEndingBalance = $"${endingBalance}";
+            string outputDividendsEarned = $"${dividendsEarned}";
+            string outputTotalSpent = $"${Math.Abs(totalSpent)}";
+
+            lblDividendsEarnedValue.Content = outputDividendsEarned;
+            lblEndingBalanceValue.Content = outputEndingBalance;
+            lblTotalSpentValue.Content = outputTotalSpent;
+
+        }
     }
 }

@@ -25,7 +25,7 @@
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal">
-                            <Button Content="{Binding DisplayText}" Background="Transparent"/>
+                            <Button Content="{Binding DisplayText}" Padding="4,0,0,4" Background="Transparent"  Tag="{Binding DisplayFilePath}" Click="btnChangeDocument_Click" x:Name="btnChangeDocument"/>
                         </StackPanel>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
@@ -90,8 +90,8 @@
         </Grid>
 
         <!---Input-->
-        <TextBlock Text="Input your Wealthsimple statement" Grid.Row="0"  HorizontalAlignment="Center" FontSize="16" FontWeight="Bold"/>
-        <Button x:Name="btnOpenFile"  Click="btnOpenFile_Click"  Content="Open File" Width="100" Height="25" Grid.Row="0" Margin="0,20,0,0"/>
+        <TextBlock Text="Wealthsimple Summarizer" Grid.Row="0"  VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="24" FontWeight="Bold"/>
+
 
 
     </Grid>
