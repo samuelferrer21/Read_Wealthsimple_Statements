@@ -11,16 +11,41 @@
             <RowDefinition Height="50"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="200"/>
+        </Grid.ColumnDefinitions>
+        
+        <!--Side panel Items-->
+        <Grid Grid.Row="0" Grid.Column="1">
+            <Button Content="Change Directory" x:Name="btnChangeDirectory" Click="btnChangeDirectory_Click"/>
+        </Grid>
+        <Grid Grid.Row="1" Grid.Column="1">
+            <ListBox x:Name="lstBoxStatements" Grid.Row="1" ItemsSource="{Binding AvailableStatements}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <Button Content="{Binding DisplayText}" Background="Transparent"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+
+            </ListBox>
+        </Grid>
+
+
 
         <Grid Grid.Row="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="200"/>
-                <RowDefinition/>
-                <RowDefinition/>
-   
+                <RowDefinition Height="46*"/>
+                <RowDefinition Height="26*"/>
+                <RowDefinition Height="15*"/>
+                <RowDefinition Height="5*"/>
+
             </Grid.RowDefinitions>
             <!---List of transactions in excel document-->
-            <ListView Grid.Row="0" MaxHeight="300" x:Name="lvTransactions" HorizontalAlignment="Stretch" VerticalAlignment="Top" ItemsSource="{Binding Entries}">
+            <ListView Grid.Row="0" MaxHeight="300" x:Name="lvTransactions" VerticalAlignment="Top" ItemsSource="{Binding Entries}">
                 <ListView.View>
                     <GridView>
                         <GridViewColumn Header="Date" DisplayMemberBinding="{Binding date, StringFormat={}{0:d}}" />
@@ -31,42 +56,43 @@
                     </GridView>
                 </ListView.View>
             </ListView>
-            
+
             <!---Basic overview-->
             <Grid Grid.Row="1">
                 <Grid.RowDefinitions >
-                    <RowDefinition/>
+                    <RowDefinition Height="auto"/>
                     <RowDefinition/>
                 </Grid.RowDefinitions>
 
-                <TextBlock Text="Overview" FontSize="16" FontWeight="Bold" Grid.Row="0"/>
-                <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Stretch"  >
-                    <Label Content="Unknown" x:Name="lblTotalSpent" />
-                    <Label Content="Unknown" x:Name="lblDividendsEarned"/>
-                    <Label Content="Unknown" x:Name="lblEndingBalance" />
+                <TextBlock Text="Financial Overview" FontSize="16" FontWeight="Bold" Grid.Row="0"/>
+                <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Stretch" >
+                    <Label Content="Total Spent:" x:Name="lblTotalSpent" Width="auto" />
+                    <Label Content="" x:Name="lblTotalSpentValue" Height="auto"/>
+                    <Label Content="Dividends Earned:" x:Name="lblDividendsEarned" Width="auto" />
+                    <Label Content="" x:Name="lblDividendsEarnedValue" />
+                    <Label Content="Ending Balance of the Month:" x:Name="lblEndingBalance" Width="auto" />
+                    <Label Content="" x:Name="lblEndingBalanceValue" />
                 </StackPanel>
             </Grid>
-            
-            <!--Purchased and sold shares
-            <ListView Grid.Row="2" x:Name="lvPurchasedShares" HorizontalAlignment="Stretch" VerticalAlignment="Top" ItemsSource="{Binding Entries}" x:FieldModifier="">
-                <ListView.View>
-                    <GridView>
-                        <GridViewColumn Header="Date" DisplayMemberBinding="{Binding date, StringFormat={}{0:d}}" />
-                        <GridViewColumn Header="Description" DisplayMemberBinding="{Binding description}" />
-                        <GridViewColumn Header="Transaction" DisplayMemberBinding="{Binding transaction}" />
-                        <GridViewColumn Header="Amount" DisplayMemberBinding="{Binding amount,StringFormat=C }"  />
-                        <GridViewColumn Header="Balance" DisplayMemberBinding="{Binding  balance, StringFormat=C}" />
-                    </GridView>
-                </ListView.View>
-            </ListView>
-            -->
 
+            <!---Stock overview-->
+            <Grid Grid.Row="1" Margin="0,92,0,0" Grid.RowSpan="4">
+                <Grid.RowDefinitions >
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+
+                <TextBlock Text="Stock Overview" FontSize="16" FontWeight="Bold" Grid.Row="0"/>
+                <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Stretch" >
+
+                </StackPanel>
+            </Grid>
         </Grid>
-        
+
         <!---Input-->
         <TextBlock Text="Input your Wealthsimple statement" Grid.Row="0"  HorizontalAlignment="Center" FontSize="16" FontWeight="Bold"/>
         <Button x:Name="btnOpenFile"  Click="btnOpenFile_Click"  Content="Open File" Width="100" Height="25" Grid.Row="0" Margin="0,20,0,0"/>
 
-        
+
     </Grid>
 </Window>
