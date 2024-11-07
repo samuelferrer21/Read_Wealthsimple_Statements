@@ -3,94 +3,50 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Read_Wealthsimple_Statements"
+        xmlns:views="clr-namespace:Read_Wealthsimple_Statements.Views"
+        
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="50"/>
-            <RowDefinition/>
-        </Grid.RowDefinitions>
+        <!--Divides main window into two columns-->
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
             <ColumnDefinition Width="200"/>
         </Grid.ColumnDefinitions>
-        
         <!--Side panel Items-->
-        <Grid Grid.Row="0" Grid.Column="1">
-            <Button Content="Change Directory" x:Name="btnChangeDirectory" Click="btnChangeDirectory_Click"/>
-        </Grid>
-        <Grid Grid.Row="1" Grid.Column="1">
-            <ListBox x:Name="lstBoxStatements" Grid.Row="1" ItemsSource="{Binding AvailableStatements}">
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel Orientation="Horizontal">
-                            <Button Content="{Binding DisplayText}" Padding="4,0,0,4" Background="Transparent"  Tag="{Binding DisplayFilePath}" Click="btnChangeDocument_Click" x:Name="btnChangeDocument"/>
-                        </StackPanel>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
+        <views:SidePanelView Grid.Column="1" Grid.Row="0"/>
 
-            </ListBox>
-        </Grid>
-
-
-
-        <Grid Grid.Row="1">
+        <!--Main Area where information will be displayed-->
+        <Grid Grid.Column="0">
             <Grid.RowDefinitions>
-                <RowDefinition Height="200"/>
-                <RowDefinition Height="46*"/>
-                <RowDefinition Height="26*"/>
-                <RowDefinition Height="15*"/>
-                <RowDefinition Height="5*"/>
-
+                <RowDefinition Height="50"/>
+                <RowDefinition/>
             </Grid.RowDefinitions>
-            <!---List of transactions in excel document-->
-            <ListView Grid.Row="0" MaxHeight="300" x:Name="lvTransactions" VerticalAlignment="Top" ItemsSource="{Binding Entries}">
-                <ListView.View>
-                    <GridView>
-                        <GridViewColumn Header="Date" DisplayMemberBinding="{Binding date, StringFormat={}{0:d}}" />
-                        <GridViewColumn Header="Description" DisplayMemberBinding="{Binding description}" />
-                        <GridViewColumn Header="Transaction" DisplayMemberBinding="{Binding transaction}" />
-                        <GridViewColumn Header="Amount" DisplayMemberBinding="{Binding amount,StringFormat=C }"  />
-                        <GridViewColumn Header="Balance" DisplayMemberBinding="{Binding  balance, StringFormat=C}" />
-                    </GridView>
-                </ListView.View>
-            </ListView>
-
-            <!---Basic overview-->
             <Grid Grid.Row="1">
-                <Grid.RowDefinitions >
-                    <RowDefinition Height="auto"/>
-                    <RowDefinition/>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="150"/>
                 </Grid.RowDefinitions>
+                <!---List of transactions in excel document-->
+                <views:LstTransactionsView />
 
-                <TextBlock Text="Financial Overview" FontSize="16" FontWeight="Bold" Grid.Row="0"/>
-                <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Stretch" >
-                    <Label Content="Total Spent:" x:Name="lblTotalSpent" Width="auto" />
-                    <Label Content="" x:Name="lblTotalSpentValue" Height="auto"/>
-                    <Label Content="Dividends Earned:" x:Name="lblDividendsEarned" Width="auto" />
-                    <Label Content="" x:Name="lblDividendsEarnedValue" />
-                    <Label Content="Ending Balance of the Month:" x:Name="lblEndingBalance" Width="auto" />
-                    <Label Content="" x:Name="lblEndingBalanceValue" />
-                </StackPanel>
+                <!---Financial overview-->
+                <views:FinancialView Grid.Row="1"/>
+
+
+                <!---Stock overview-->
+                <views:StockView Grid.Row="2"/>
+
             </Grid>
 
-            <!---Stock overview-->
-            <Grid Grid.Row="1" Margin="0,92,0,0" Grid.RowSpan="4">
-                <Grid.RowDefinitions >
-                    <RowDefinition Height="auto"/>
-                    <RowDefinition/>
-                </Grid.RowDefinitions>
-
-                <TextBlock Text="Stock Overview" FontSize="16" FontWeight="Bold" Grid.Row="0"/>
-                <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Stretch" >
-
-                </StackPanel>
-            </Grid>
+            <!---Input-->
+            <TextBlock Text="Wealthsimple Summarizer" Grid.Row="0"  VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="24" FontWeight="Bold"/>
         </Grid>
 
-        <!---Input-->
-        <TextBlock Text="Wealthsimple Summarizer" Grid.Row="0"  VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="24" FontWeight="Bold"/>
+       
+
+        
 
 
 

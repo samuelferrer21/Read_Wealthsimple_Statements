@@ -1,0 +1,25 @@
+﻿<UserControl x:Class="Read_Wealthsimple_Statements.Views.FinancialView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Read_Wealthsimple_Statements.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <Grid.RowDefinitions >
+            <RowDefinition Height="auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Text="Financial Overview" FontSize="16" FontWeight="Bold" Grid.Row="0"/>
+        <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Stretch" >
+            <Label Content="Total Spent:" x:Name="lblTotalSpent" Width="auto" />
+            <Label Content="" x:Name="lblTotalSpentValue" Height="auto"/>
+            <Label Content="Dividends Earned:" x:Name="lblDividendsEarned" Width="auto" />
+            <Label Content="" x:Name="lblDividendsEarnedValue" />
+            <Label Content="Ending Balance of the Month:" x:Name="lblEndingBalance" Width="auto" />
+            <Label Content="" x:Name="lblEndingBalanceValue" />
+        </StackPanel>
+    </Grid>
+</UserControl>
