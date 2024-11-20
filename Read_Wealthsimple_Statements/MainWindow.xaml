@@ -8,47 +8,7 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <!--Divides main window into two columns-->
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition Width="200"/>
-        </Grid.ColumnDefinitions>
         <!--Side panel Items-->
-        <views:SidePanelView Grid.Column="1" Grid.Row="0"/>
-
-        <!--Main Area where information will be displayed-->
-        <Grid Grid.Column="0">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="50"/>
-                <RowDefinition/>
-            </Grid.RowDefinitions>
-            <Grid Grid.Row="1">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="50"/>
-                    <RowDefinition Height="150"/>
-                </Grid.RowDefinitions>
-                <!---List of transactions in excel document-->
-                <views:LstTransactionsView />
-
-                <!---Financial overview-->
-                <views:FinancialView Grid.Row="1"/>
-
-
-                <!---Stock overview-->
-                <views:StockView Grid.Row="2"/>
-
-            </Grid>
-
-            <!---Input-->
-            <TextBlock Text="Wealthsimple Summarizer" Grid.Row="0"  VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="24" FontWeight="Bold"/>
-        </Grid>
-
-       
-
-        
-
-
-
+        <views:DashboardView />
     </Grid>
 </Window>

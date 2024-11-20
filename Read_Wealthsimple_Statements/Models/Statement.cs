@@ -9,7 +9,7 @@ namespace Read_Wealthsimple_Statements.Models
     /// <summary>
     /// Represents the individual excel file that is detected
     /// </summary>
-    class Statement
+    public class Statement
     {
         private string title { get; set; }
         private string filePath { get; set; }
@@ -33,6 +33,8 @@ namespace Read_Wealthsimple_Statements.Models
         {
             return this.title;
         }
+
+
         
     }
 }

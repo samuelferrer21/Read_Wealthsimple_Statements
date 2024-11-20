@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace Read_Wealthsimple_Statements.Views
 {
     /// <summary>
-    /// Interaction logic for StockView.xaml
+    /// Interaction logic for DashboardView.xaml
     /// </summary>
-    public partial class StockView : UserControl
+    public partial class DashboardView : UserControl
     {
-        public StockView()
+        public DashboardView()
         {
             InitializeComponent();
         }
